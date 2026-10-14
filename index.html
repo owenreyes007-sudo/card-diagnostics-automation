@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12283f">
+  <meta name="description" content="Illustrative, local-only account console and card diagnostics workflow.">
+  <title>Northstar | Card diagnostics</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="prototype-banner">ILLUSTRATIVE PROTOTYPE <span>Not connected to production systems</span></div>
+  <header class="app-header">
+    <a class="brand" href="#overview" aria-label="Northstar account console home"><span class="brand-mark">N</span><span>northstar <small>ACCOUNT CONSOLE</small></span></a>
+    <label class="global-search"><span aria-hidden="true">⌕</span><input aria-label="Search synthetic account" value="NS-20481" readonly><kbd>DEMO</kbd></label>
+    <div class="header-actions"><button class="header-button" aria-label="Notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></button><span class="operator"><b>OR</b><span>Owen Reyes<small>Card operations</small></span><span aria-hidden="true">⌄</span></span></div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="side-label">WORKSPACE</div>
+      <a class="nav-item active" href="#overview"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Account overview</a>
+      <a class="nav-item" href="#activity"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span>Financial activity</a>
+      <a class="nav-item" href="#card"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span>Cards</a>
+      <a class="nav-item" href="#cases"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v13H4zM8 7V4h8v3M4 11h16M10 11v2h4v-2"/></svg></span>Cases <i>2</i></a>
+      <a class="nav-item" href="#notes"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/></svg></span>Notes &amp; alerts</a>
+      <div class="side-label tools-label">TOOLS</div>
+      <a class="nav-item" href="#troubleshoot"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M8 10.5l1.7 1.7L13.5 8"/></svg></span>Card diagnostics</a>
+      <a class="nav-item" href="#guide"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22zM4 5.5v14A2.5 2.5 0 0 1 6.5 17H20M8 7h8M8 11h8"/></svg></span>Reference guide</a>
+      <div class="sidebar-bottom"><span class="secure-icon">✓</span><span>Illustrative data only<small>Local demo environment</small></span></div>
+    </aside>
+    <main id="main" tabindex="-1">
+      <div class="breadcrumbs"><a href="#overview">Accounts</a><span>/</span><span id="breadcrumb-current">Account overview</span><span class="breadcrumb-right">DEMO RECORD <b>NS-20481</b></span></div>
+      <section id="overview" class="page view active-view" aria-labelledby="page-title">
+        <div class="page-heading">
+          <div><p class="eyebrow">ACCOUNT WORKSPACE <span class="dotsep">·</span> DEMONSTRATION RECORD</p><h1 id="page-title">Account overview</h1><p class="subhead">Review synthetic account context and card activity before troubleshooting.</p></div>
+          <button id="launch-diagnostics" class="button primary"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M8 10.5l1.7 1.7L13.5 8"/></svg> Open card diagnostics <span aria-hidden="true">→</span></button>
+        </div>
+        <section class="identity-panel" aria-label="Customer and account summary">
+          <div class="customer-block"><div class="avatar">JR</div><div><h2>Jamie Rivera <span class="verified"><b>✓</b> Verified</span></h2><p>Consumer account <span>•</span> Customer since Aug 2021</p><small>Account reference <strong>••• 20481</strong> <span class="sep">|</span> Handle <strong>$jamie.r_demo</strong></small></div></div>
+          <div class="identity-states"><div class="state-item"><span class="state-label">ACCOUNT STATUS</span><span class="status-pill green"><i></i> Active</span></div><div class="state-item"><span class="state-label">RISK REVIEW</span><span class="status-pill green"><i></i> Clear</span></div><div class="state-item"><span class="state-label">LINKED ACCOUNT</span><span class="status-pill neutral"><i></i> Confirmed</span></div></div>
+        </section>
+        <section class="metric-grid" aria-label="Account financial summary">
+          <article class="metric"><span class="metric-label">TOTAL BALANCE <span>ⓘ</span></span><strong>$1,284<span class="decimal">.62</span></strong><small>Available balance</small><div class="metric-icon teal">$</div></article>
+          <article class="metric"><span class="metric-label">INCOMING <span>ⓘ</span></span><strong>$2,460<span class="decimal">.00</span></strong><small>Last 30 days</small><div class="metric-icon blue">↘</div></article>
+          <article class="metric"><span class="metric-label">CARD SPEND <span>ⓘ</span></span><strong>$684<span class="decimal">.31</span></strong><small>Last 30 days</small><div class="metric-icon violet">▣</div></article>
+          <article class="metric"><span class="metric-label">OPEN CASES <span>ⓘ</span></span><strong>02</strong><small>1 awaiting review</small><div class="metric-icon amber">▤</div></article>
+        </section>
+        <div class="overview-grid">
+          <section class="panel activity-panel" id="activity"><div class="panel-heading"><div><h2>Account activity</h2><p>Recent synthetic card and account transactions</p></div><button class="select-button">Last 30 days <span>⌄</span></button></div>
+            <div class="chart-wrap" role="img" aria-label="Illustrative account activity chart showing weekly incoming and outgoing totals"><div class="chart-y"><span>$800</span><span>$600</span><span>$400</span><span>$200</span><span>$0</span></div><div class="chart"><div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div><div class="grid-line"></div><div class="grid-line zero"></div><svg viewBox="0 0 660 200" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2b9ba0" stop-opacity=".22"/><stop offset="1" stop-color="#2b9ba0" stop-opacity="0"/></linearGradient></defs><path class="chart-area" d="M0 134 C35 125 47 97 88 104 S149 144 198 113 S249 66 287 81 S342 128 378 101 S432 62 470 77 S526 113 561 86 S624 44 660 53 L660 200 L0 200Z"/><path class="chart-line" d="M0 134 C35 125 47 97 88 104 S149 144 198 113 S249 66 287 81 S342 128 378 101 S432 62 470 77 S526 113 561 86 S624 44 660 53"/><circle cx="88" cy="104" r="4"/><circle cx="287" cy="81" r="4"/><circle cx="470" cy="77" r="4"/><circle cx="660" cy="53" r="4"/></svg><div class="chart-x"><span>Sep 15</span><span>Sep 22</span><span>Sep 29</span><span>Oct 06</span><span>Oct 13</span></div></div></div>
+            <div class="chart-legend"><span><i class="legend-dot teal-dot"></i>Incoming</span><span><i class="legend-dot navy-dot"></i>Card activity</span><button>View activity <b>→</b></button></div>
+          </section>
+          <section class="panel card-panel" id="card"><div class="panel-heading"><div><h2>Card on file</h2><p>Physical card · ending 1842</p></div><button class="icon-more" aria-label="More card options">···</button></div>
+            <div class="bank-card"><div class="card-top"><span class="card-brand"><i></i>northstar</span><span class="card-chip">DEMO</span></div><div class="chip"></div><div class="card-num">•••• &nbsp; •••• &nbsp; •••• &nbsp; <b>1842</b></div><div class="card-bottom"><span>JAMIE RIVERA</span><span>VISA</span></div></div>
+            <div class="card-status-row"><div><span class="state-label">CARD STATUS</span><div><span id="card-status" class="status-pill amber"><i></i> Not activated</span></div></div><button id="card-details" class="text-link">View card details <b>→</b></button></div>
+            <div class="card-meta"><div><span>ISSUED</span><b>Oct 05, 2026</b></div><div><span>DELIVERY</span><b><i class="tiny-green"></i> Delivered</b></div></div>
+          </section>
+        </div>
+        <section class="panel transactions-panel"><div class="panel-heading"><div><h2>Recent activity</h2><p>Latest transactions across this synthetic account</p></div><button class="text-link">See all <b>→</b></button></div>
+          <div class="table-wrap"><table><thead><tr><th>TRANSACTION</th><th>DATE</th><th>STATUS</th><th class="right">AMOUNT</th></tr></thead><tbody>
+          <tr><td><span class="merchant-icon coffee">C</span><span class="merchant">Corner Coffee<small>Food &amp; drink</small></span></td><td>Oct 13, 2026 <small>8:21 AM</small></td><td><span class="table-status posted">Posted</span></td><td class="right amount">−$8.45</td></tr>
+          <tr><td><span class="merchant-icon shop">M</span><span class="merchant">Market Square<small>Groceries</small></span></td><td>Oct 12, 2026 <small>6:14 PM</small></td><td><span class="table-status posted">Posted</span></td><td class="right amount">−$42.18</td></tr>
+          <tr><td><span class="merchant-icon ride">R</span><span class="merchant">Metro Ride<small>Travel</small></span></td><td>Oct 11, 2026 <small>9:03 AM</small></td><td><span class="table-status pending">Pending</span></td><td class="right amount">−$16.00</td></tr>
+          </tbody></table></div>
+        </section>
+        <div class="footer-disclaimer"><span>ⓘ</span> Illustrative prototype — not connected to production systems. All account details are synthetic.</div>
+      </section>
+      <section id="troubleshoot" class="page view" aria-labelledby="diagnostics-title"></section>
+      <section id="results" class="page view" aria-labelledby="results-title"></section>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
+
