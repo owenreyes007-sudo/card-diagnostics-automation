@@ -99,6 +99,8 @@ Automated Chromium validation (`work/validate_northstar_context.cjs`) passed on 
 | Mobile modal at 390px | Passed; 370px modal within 390px viewport, no horizontal overflow |
 | Browser runtime errors | None |
 | JavaScript syntax checks | Passed for app, scenarios, and record catalog |
+| Public GitHub Pages deployment | Passed; latest commit `1b0a373f320750359ce08e8deb13ea1450d3174c` deployed successfully |
+| Hosted Chromium activation walkthrough | Passed; record reference and both device events visible, no implementation disclaimer or browser error |
 
 ## Screenshots
 
