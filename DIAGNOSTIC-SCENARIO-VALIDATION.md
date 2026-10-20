@@ -1,75 +1,91 @@
-# Northstar card diagnostic scenario inventory and validation
+# Northstar embedded card diagnostics: scenario inventory and validation
 
 **Updated:** 2026-10-20  
-**Application:** Northstar Account Console prototype  
-**Scope:** Existing embedded Card Diagnostics workflow
+**Application:** Northstar Account Console  
+**Scope:** Existing embedded Card Diagnostics workflow. No separate application was introduced.
 
-## Customer Issue Tag coverage
+## User flow
 
-Each existing tag is retained and has a success case, an illustrative failure case, and a verification-needed case.
+The advocate selects a Customer Issue Tag, selects a relevant synthetic customer record in the CIT-specific dialog, selects one compatible scenario, reviews a confirmation summary, and explicitly runs the diagnostic. The system does not evaluate checks before confirmation. A scenario's cause, evidence, and findings appear only after execution. Cancellation closes setup; Back retains valid selections. Declined transactions can be searched by merchant, reference, date, or amount, and an empty search clears any prior selection.
 
-| Customer Issue Tag | Success | Failure | Verification needed |
-|---|---|---|---|
-| Card activation | Eligible for activation (`activation-ready`) | Different device during activation (`activation-device-mismatch`) | Activation failed · cause not confirmed (`activation-unconfirmed`) |
-| Declined transaction | No current decline blocker (`decline-cleared`) | Declined · balance below attempt amount (`decline-balance-demo`) | Declined · reason unavailable (`decline-reason-missing`) |
-| Card delivery | Delivery received and confirmed (`delivery-confirmed`) | Delivery exception recorded (`delivery-exception`) | Tracking evidence unavailable (`delivery-tracking-missing`) |
-| Card replacement | Replacement already delivered (`replacement-complete`) | Damage documented (`replacement-damage`) | Replacement reason unclear (`replacement-reason-missing`) |
-| Card not working | No current card-use blocker (`notworking-clear`) | Chip read error recorded (`notworking-chip-error`) | Attempt details unavailable (`notworking-details-missing`) |
-| Card restrictions | No restriction recorded (`restriction-clear`) | Card locked in controls (`restriction-customer-lock`) | Restriction status unavailable (`restriction-status-missing`) |
+The six issue cards show only that a failure demo is available. Each category gets its own record selector: cards for Activation, Not Working, and Restrictions; transactions for Declined Transaction; delivery requests for Card Delivery; replacement requests for Card Replacement.
 
-The failure cases prioritize distinct symptoms: a configured verification gate, an amount/balance mismatch, a shipment exception, documented physical damage, a chip-read event, and a recorded card-control lock. The verification cases keep the cause unresolved until specific information is available.
+## CIT, records, and scenarios
 
-## Evidence and diagnosis changes
+Each record below is fictional and maps to its compatible configured case. Every CIT has one success, one failure, and one verification-needed case.
 
-- **Inactive card during activation:** now shown as an expected initial state and informational finding. It no longer creates a risk flag by itself.
-- **Device context difference:** remains a selectable activation failure demonstration, but is labeled an illustrative rule. The UI says the device difference is observed while production validity is unconfirmed.
-- **Generic cross-issue multiple blockers:** replaced by issue-specific scenario data so an activation case cannot inherit an unrelated restriction or decline from a shared preset.
-- **Failure symptom versus cause:** when a failure is recorded but its reason is unavailable, the symptom is shown as context and the cause as unconfirmed. No unsupported risk or root-cause claim is made.
-- **System conditions and case notes:** each scenario carries its own initial state, trigger, evidence, and supporting note. These fields feed the results, findings, and copyable summary from the same selected configuration.
-- **Account context:** the account overview card status follows the selected scenario and remains in sync when returning from diagnostics.
-- **Resolution guidance:** recommendations are specific to each scenario, distinguish advocate actions from system actions, include customer-facing language, state the expected next state, and name escalation criteria. The prototype executes no account action.
+| CIT | Record selector and compatible records | Success | Failure demonstration | Verification needed |
+|---|---|---|---|---|
+| Card Activation | Cards: `card-1842`, `card-4821`, `card-9037` | `activation-ready` on `card-4821` | `activation-device-mismatch` on `card-1842` | `activation-unconfirmed` on `card-9037` |
+| Declined Transaction | Searchable transactions: `txn-884201`, `txn-884155`, `txn-883992` | `decline-cleared` on `txn-884155` | `decline-balance-demo` on `txn-884201` | `decline-reason-missing` on `txn-883992` |
+| Card Delivery | Delivery requests: `del-62014`, `del-61983`, `del-62102` | `delivery-confirmed` on `del-61983` | `delivery-exception` on `del-62014` | `delivery-tracking-missing` on `del-62102` |
+| Card Replacement | Replacement requests/inquiries: `rep-77104`, `rep-76882`, `rep-77215` | `replacement-complete` on `rep-76882` | `replacement-damage` on `rep-77104` | `replacement-reason-missing` on `rep-77215` |
+| Card Not Working | Cards and associated use context: `use-1842`, `use-4821`, `use-9037` | `notworking-clear` on `use-4821` | `notworking-chip-error` on `use-1842` | `notworking-details-missing` on `use-9037` |
+| Card Restrictions | Cards and restriction context: `control-1842`, `control-4821`, `control-9037` | `restriction-clear` on `control-4821` | `restriction-customer-lock` on `control-1842` | `restriction-status-missing` on `control-9037` |
+
+No full card number, PIN, CVV, or real customer data is used. Card records display only the last four digits. All records and rules are local synthetic demo data.
+
+## Diagnostic consistency and rule governance
+
+- Inactive status during activation remains an expected starting condition; it does not create a risk flag by itself.
+- The device-context mismatch is an illustrative demo rule. The result confirms only that the configured synthetic events differ; production rule validity is explicitly unconfirmed.
+- The decline record amount ($38.50) and configured balance ($24.00) now agree.
+- Replacement inquiry `RP-77104` is associated with a documented damaged card and no replacement order. The completed request `RP-76882` is associated with card ending 4821 and a delivered replacement.
+- Selected record reference, identifier, and status are added to the evaluated system conditions, case note, results, and copyable case summary. Incompatible scenario IDs cannot be run against a record.
+- Missing or contradictory evidence remains unconfirmed; illustrative conditions are not represented as production Cash App policy.
+
+No approved policy source was provided. There are no verified production rules in this prototype. Business-owner review is still needed for activation verification, decline reason interpretation, delivery timeframes, replacement eligibility, card-use troubleshooting, restriction handling, production scripts, and escalation ownership.
+
+## Refresh behavior
+
+The app uses in-memory session state only. No `localStorage`, `sessionStorage`, IndexedDB, URL parameter, or history-state persistence is used for selections or diagnostic outcomes. Initialization resets the view to Account overview and clears the selected CIT, record, scenario, dialog, search query, and result. The configured scenario catalog and fictional records remain available because they are static files loaded on each page load.
 
 ## Validation results
 
-Validation was run against the local Northstar app with a headless Chromium browser on 2026-10-20.
+Automated Chromium validation (`work/validate_northstar_context.cjs`) passed on 2026-10-20:
 
 | Check | Result |
 |---|---|
-| JavaScript syntax (`app.js`, `diagnostic-scenarios.js`) | Passed |
-| Existing issue tags retained | 6 of 6 |
-| Preconfigured scenarios | 18 total; 3 per issue tag |
-| Required scenario fields | Present for all 18: system conditions, trigger, diagnosis, cause/confidence, evidence, case note, impact, advocate steps, customer language, expected outcome, and escalation guidance |
-| Deterministic repeat selection | Passed; repeated evaluations returned the same scenario result data |
-| Failure case checks | All 6 failure cases include a specific configured action finding |
-| Success case checks | All 6 success cases contain no blocker or unknown finding |
-| Verification case checks | All 6 show at least one unavailable/unconfirmed indicator and no confirmed blocker |
-| Account scenario synchronization | Passed; selected locked-card case updates and retains the overview status |
-| Representative UI runs | Passed: activation success, activation device mismatch, and decline reason unavailable |
-| Mobile layout | Passed at 390px; no horizontal overflow |
-| Browser runtime errors | None observed |
+| Default landing screen on fresh load | Passed |
+| Existing CITs retained | 6 of 6 |
+| Record selector type appropriate to each CIT | Passed |
+| Fictional target records | 18 total; 3 per CIT |
+| Configured scenarios | 18 total; success, failure, and verification case per CIT |
+| Deterministic evaluator and record compatibility | Passed across all 18 scenario/record mappings |
+| Failure cases contain a specific blocker | Passed across all six |
+| Success cases have no blocker or unknown finding | Passed across all six |
+| Verification cases remain unconfirmed, without confirmed blockers | Passed across all six |
+| Search by transaction reference | Passed |
+| Empty transaction search and stale-selection guard | Passed |
+| Record and scenario required before proceeding | Passed |
+| Cancel closes the selector without running checks | Passed |
+| Back from confirmation retains compatible scenario choice | Passed |
+| Confirmation hides result details before Run Diagnostic | Passed |
+| Six issue-specific failure demonstrations produce selected-record results | Passed |
+| Refresh during pending confirmation clears session selections | Passed |
+| Refresh after completed diagnostic returns to Account overview and clears findings | Passed |
+| Configured records and scenarios remain available after refresh | Passed |
+| Mobile modal at 390px | Passed; 370px modal within 390px viewport, no horizontal overflow |
+| Browser runtime errors | None |
+| JavaScript syntax checks | Passed for app, scenarios, and record catalog |
 
 ## Screenshots
 
-The HTML pack includes these actual browser captures:
+The HTML pack contains actual Chromium screenshots for the result stage of all six failure demos:
 
-- `screenshot-activation-success.png`
-- `screenshot-activation-device-mismatch.png`
-- `screenshot-decline-unconfirmed.png`
-- `screenshot-mobile-activation-scenario.png`
+- `screenshot-context-activation-result.png`
+- `screenshot-context-decline-result.png`
+- `screenshot-context-delivery-result.png`
+- `screenshot-context-replacement-result.png`
+- `screenshot-context-notworking-result.png`
+- `screenshot-context-restrictions-result.png`
 
-## Rule provenance and outstanding assumptions
+Activation walkthrough stages:
 
-No verified Northstar policy source was available for this implementation. Therefore, there are **no scenarios classified as verified business rules**. All success examples are synthetic states; all failure conditions that imply business behavior are labeled illustrative; verification cases explicitly state that the diagnosis is unconfirmed.
+- `screenshot-context-activation-record-selection.png`
+- `screenshot-context-activation-scenario-selection.png`
+- `screenshot-context-activation-confirmation.png`
+- `screenshot-context-mobile-record-selection.png`
 
-Business-owner validation is still needed for:
-
-1. Whether device-context changes during card activation should require a verification step.
-2. The actual decline reason fields and whether the synthetic amount/balance example is an appropriate illustration.
-3. Delivery exception actions, service windows, and escalation ownership.
-4. Replacement eligibility and the approved path for damaged cards.
-5. How chip-read errors should be interpreted and what safe retry guidance is appropriate.
-6. The meaning and authorized handling of card-control locks and other restriction indicators.
-7. Production verification steps, escalation teams, and customer scripts for each issue.
-
-Until those rules are reviewed, this remains a synthetic demonstration and must not be represented as production policy or guidance.
+Each issue also has a confirmation screenshot. The run stage is represented by the live diagnostic progress UI immediately after confirmation.
 
