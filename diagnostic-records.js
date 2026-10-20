@@ -11,9 +11,9 @@ window.NorthstarDiagnosticRecords = {
   decline: {
     title:'Select Transaction to Diagnose', kind:'transaction', searchable:true,
     records:[
-      {id:'txn-884201',label:'Corner Coffee',identifier:'TXN-884201',date:'Oct 19, 2026 · 8:42 AM',amount:'$38.50 USD',status:'Declined',card:'Card ending 1842',detail:'Available demo balance at the time: $24.00 USD',scenarioIds:['decline-balance-demo']},
+      {id:'txn-884201',label:'Corner Coffee',identifier:'TXN-884201',date:'Oct 19, 2026 · 8:42 AM',amount:'$38.50 USD',status:'Declined',card:'Card ending 1842',detail:'Available balance at the time: $24.00 USD',scenarioIds:['decline-balance-demo']},
       {id:'txn-884155',label:'Market Square',identifier:'TXN-884155',date:'Oct 18, 2026 · 6:14 PM',amount:'$42.18 USD',status:'Approved',card:'Card ending 1842',detail:'Approved purchase · Customer confirmation needed to link it to the reported decline',scenarioIds:['decline-cleared']},
-      {id:'txn-883992',label:'Metro Ride',identifier:'TXN-883992',date:'Oct 17, 2026 · 9:03 AM',amount:'$16.00 USD',status:'Declined',card:'Card ending 4821',detail:'Decline reason field is unavailable in the demo record',scenarioIds:['decline-reason-missing']}
+      {id:'txn-883992',label:'Metro Ride',identifier:'TXN-883992',date:'Oct 17, 2026 · 9:03 AM',amount:'$16.00 USD',status:'Declined',card:'Card ending 4821',detail:'Decline reason field is unavailable in this record',scenarioIds:['decline-reason-missing']}
     ]
   },
   delivery:{
@@ -49,4 +49,3 @@ window.NorthstarDiagnosticRecords = {
     ]
   }
 };
-

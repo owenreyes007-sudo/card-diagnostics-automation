@@ -1,20 +1,20 @@
 # Northstar embedded card diagnostics: scenario inventory and validation
 
-**Updated:** 2026-10-20  
+**Updated:** 2026-10-21
 **Application:** Northstar Account Console  
 **Scope:** Existing embedded Card Diagnostics workflow. No separate application was introduced.
 
 ## User flow
 
-The advocate selects a Customer Issue Tag, selects a relevant synthetic customer record in the CIT-specific dialog, selects one compatible scenario, reviews a confirmation summary, and explicitly runs the diagnostic. The system does not evaluate checks before confirmation. A scenario's cause, evidence, and findings appear only after execution. Cancellation closes setup; Back retains valid selections. Declined transactions can be searched by merchant, reference, date, or amount, and an empty search clears any prior selection.
+The advocate selects a Customer Issue Tag, selects a relevant fictional customer record in the CIT-specific dialog, chooses its named scenario and reviews the configured account conditions, then confirms the target and runs the diagnostic. The system does not evaluate findings before confirmation. The scenario picker shows the condition being simulated; diagnostic evidence and recommendations are presented after execution. Each current record maps to its compatible configured condition. Back retains valid selections; **Change scenario** clears the result and returns to that CIT's record selector to choose a different account condition. Declined transactions can be searched by merchant, reference, date, or amount, and an empty search clears any prior selection.
 
-The six issue cards show only that a failure demo is available. Each category gets its own record selector: cards for Activation, Not Working, and Restrictions; transactions for Declined Transaction; delivery requests for Card Delivery; replacement requests for Card Replacement.
+The six issue cards are clean issue selectors with no demo-availability badges. Each category gets its own record selector: cards for Activation, Not Working, and Restrictions; transactions for Declined Transaction; delivery requests for Card Delivery; replacement requests for Card Replacement.
 
 ## CIT, records, and scenarios
 
 Each record below is fictional and maps to its compatible configured case. Every CIT has one success, one failure, and one verification-needed case.
 
-| CIT | Record selector and compatible records | Success | Failure demonstration | Verification needed |
+| CIT | Record selector and compatible records | Success | Configured failure condition | Verification needed |
 |---|---|---|---|---|
 | Card Activation | Cards: `card-1842`, `card-4821`, `card-9037` | `activation-ready` on `card-4821` | `activation-device-mismatch` on `card-1842` | `activation-unconfirmed` on `card-9037` |
 | Declined Transaction | Searchable transactions: `txn-884201`, `txn-884155`, `txn-883992` | `decline-cleared` on `txn-884155` | `decline-balance-demo` on `txn-884201` | `decline-reason-missing` on `txn-883992` |
@@ -64,6 +64,18 @@ The application describes observed scenario data and investigation steps without
 
 The account workspace remains embedded and its navigation and CIT inventory are unchanged. Refresh still clears the current session while leaving static records and scenarios available.
 
+## Diagnostic results and advocate actions refinement
+
+The results view is now organized into three visible sections:
+
+1. **Diagnostic Results** — reported issue, one primary finding, minimum supporting evidence, and a status of **Action Required**, **Resolved**, **No Issue Detected**, or **Investigation Required**. Unestablished causes are explicitly labeled as unconfirmed; expected initial states are not called failures. A transaction that is approved but not confirmed as the customer's reported purchase remains **Investigation Required**.
+2. **Troubleshooting Steps** — three ordered actions generated from the selected scenario's configured steps. Each action has a linked check/evidence fact, its expected interpretation, and a next step if the check fails. The checklist is tied to the chosen fictional record; card last-four details are personalized from that record.
+3. **Recommended Actions** — one immediate decision, short customer communication, a scenario-specific escalation condition, and resolution criteria. This section summarizes the next decision instead of repeating the entire checklist.
+
+Account conditions, selected record references, event details, customer/case notes, and all findings have moved into the collapsed **View Supporting Evidence** disclosure. The full case summary is no longer displayed beside the result; **Copy summary** still copies a concise, structured handoff. Screenshots of the revised result view keep supporting evidence collapsed by default.
+
+The issue selector no longer shows implementation labels such as “Failure demo available.” Scenario choices use readable scenario names, and the picker displays account-condition values from that scenario's single source of truth. Current scenarios are tied to a compatible record; selecting **Change scenario** on results clears both in-memory findings and the old results markup, then returns to record selection for the same CIT. A new result only appears after confirmation and a fresh diagnostic run. Internal rule provenance and assumptions remain in the scenario configuration and this report.
+
 ## Refresh behavior
 
 The app uses in-memory session state only. No `localStorage`, `sessionStorage`, IndexedDB, URL parameter, or history-state persistence is used for selections or diagnostic outcomes. Initialization resets the view to Account overview and clears the selected CIT, record, scenario, dialog, search query, and result. The configured scenario catalog and fictional records remain available because they are static files loaded on each page load.
@@ -82,6 +94,12 @@ Automated Chromium validation (`work/validate_northstar_context.cjs`) passed on 
 | Deterministic evaluator and record compatibility | Passed across all 18 scenario/record mappings |
 | Card ending resolved from selected card, transaction, delivery, or replacement record | Passed across all 18 mappings |
 | Each finding includes interpretation; blocker and unavailable findings include a next action | Passed across all 18 mappings |
+| Three-section result structure, status, and complete 3-step checklist | Passed across all 18 UI executions |
+| Supporting Evidence collapsed by default and accessible on expansion | Passed across all 18 UI executions |
+| Concise structured copy summary, including clipboard action | Passed across all 18 UI executions; clipboard write verified |
+| Human-readable scenario selection and account-condition preview | Passed across all 18 UI executions |
+| Change scenario clears prior result and allows a different compatible record/condition to run | Passed for Card Activation; all six CITs use the same selection and evaluation flow |
+| No development-oriented failure/demo labels on the CIT selector | Passed |
 | Advocate result panels free of implementation-rule disclaimers | Passed across all 18 UI executions |
 | Failure cases contain a specific blocker | Passed across all six |
 | Success cases have no blocker or unknown finding | Passed across all six |
@@ -91,20 +109,21 @@ Automated Chromium validation (`work/validate_northstar_context.cjs`) passed on 
 | Record and scenario required before proceeding | Passed |
 | Cancel closes the selector without running checks | Passed |
 | Back from confirmation retains compatible scenario choice | Passed |
-| Confirmation hides result details before Run Diagnostic | Passed |
-| All 18 compatible scenarios manually selected and executed in the UI | Passed; six issue-specific failure demos produce selected-record findings |
+| Confirmation shows the selected CIT, record, and named scenario before Run Diagnostic | Passed; no finding evidence is shown in confirmation |
+| All 18 compatible scenarios selected and executed in the UI | Passed; account condition and findings match the selected record and scenario |
 | Refresh during pending confirmation clears session selections | Passed |
 | Refresh after completed diagnostic returns to Account overview and clears findings | Passed |
 | Configured records and scenarios remain available after refresh | Passed |
-| Mobile modal at 390px | Passed; 370px modal within 390px viewport, no horizontal overflow |
+| Mobile selector and result layout at 390px | Passed; 370px modal and results content fit 390px viewport with no horizontal overflow |
 | Browser runtime errors | None |
 | JavaScript syntax checks | Passed for app, scenarios, and record catalog |
-| Public GitHub Pages deployment | Passed; latest commit `1b0a373f320750359ce08e8deb13ea1450d3174c` deployed successfully |
-| Hosted Chromium activation walkthrough | Passed; record reference and both device events visible, no implementation disclaimer or browser error |
+| Scenario change invalidates old findings and requires a rerun | Passed for Card Activation with a different compatible card and condition |
+| Public GitHub Pages deployment | Previously passed; this refinement is pending publication and hosted verification |
+| Hosted Chromium activation walkthrough | Previously passed; rerun after this refinement is published |
 
 ## Screenshots
 
-The HTML pack contains actual Chromium screenshots for the result stage of all six failure demos:
+The HTML pack contains actual Chromium screenshots for the revised result stage of all six configured failure conditions. Supporting evidence is collapsed in these captures:
 
 - `screenshot-context-activation-result.png`
 - `screenshot-context-decline-result.png`
@@ -122,4 +141,3 @@ Activation walkthrough stages:
 - `screenshot-context-mobile-record-selection.png`
 
 Each issue also has a confirmation screenshot. The activation run screenshot captures the live diagnostic progress UI immediately after confirmation.
-

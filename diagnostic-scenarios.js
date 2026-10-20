@@ -54,12 +54,12 @@
         [finding('activation-attempt','Activation attempt','info','The latest attempt is recorded as failed, but its cause is not specified.','Attempt result: failed · Error detail: unavailable'),finding('restrictions','Restriction indicator','unknown','Restriction status is unavailable and cannot be treated as clear.','Restriction indicator: unavailable'),finding('activation-state','Activation status','unknown','Current activation status could not be refreshed.','Activation status: unavailable')])
     ],
     decline: [
-      scenario('decline-balance-demo', 'Declined · balance below attempt amount', 'failure', 'The synthetic available balance is below the recorded card purchase amount.',
-        [['Account status','Active'],['Identity indicator','Verified'],['Card status','Active · unlocked'],['Available balance','$24.00'],['Attempt amount','$38.50'],['Authorization result','Declined · demo reason: insufficient available balance']],
+      scenario('decline-balance-demo', 'Declined · balance below attempt amount', 'failure', 'The recorded available balance is below the recorded card purchase amount.',
+        [['Account status','Active'],['Identity indicator','Verified'],['Card status','Active · unlocked'],['Available balance','$24.00'],['Attempt amount','$38.50'],['Authorization result','Declined · recorded reason: insufficient available balance']],
         'TXN-884201 at Corner Coffee is for $38.50; $24.00 was available at the time.',
         'The recorded attempt amount exceeds the available balance recorded for this transaction.',
         'The selected transaction is $38.50 and the account record shows $24.00 available at that time; the linked event records insufficient available balance as the decline reason.', 'TXN-884201 · Corner Coffee · Oct 19, 2026, 8:42 AM · $38.50 · Available balance $24.00 · Decline reason: insufficient available balance.',
-        'Customer reports a declined $38.50 purchase. The demo ledger shows $24.00 available and a matching decline event.',
+        'Customer reports a declined $38.50 purchase. The account ledger shows $24.00 available and a matching decline event.',
         'This $38.50 purchase did not complete. The diagnostic does not retry the payment or change the account balance.',
         ['Confirm Corner Coffee, $38.50, and the Oct 19, 2026 8:42 AM attempt with the customer.','Review the $24.00 available balance and recorded decline reason with the customer; do not promise that adding funds will guarantee a later approval.','If the customer disputes the amount or balance, compare the transaction and account records and document the exact difference.'],
         'The purchase amount shown is higher than the available balance in this example. We can review the amounts together before you decide what to do next.',
@@ -94,14 +94,14 @@
     delivery: [
       scenario('delivery-exception', 'Delivery exception recorded', 'failure', 'Carrier event shows an address confirmation exception before delivery.',
         [['Card order','In transit'],['Tracking event','Address confirmation required'],['Last scan','Oct 19, 2026 · 2:10 PM'],['Delivery address','Not re-confirmed in this case'],['Card activation','Not activated']],
-        'The latest synthetic carrier event records an address confirmation exception.',
+        'The latest carrier event records an address confirmation exception.',
         'The shipment is not marked delivered and the latest event needs address confirmation.',
         'Scenario-configured root cause: delivery exception is present. The exact handling path and timeframe require business validation.', 'Carrier event and order status align; no delivered event is present.',
         'Customer reports the card has not arrived. Tracking shows an address confirmation exception. The advocate has not yet confirmed the address with the customer.',
         'Delivery remains pending; the customer cannot use this card until received and otherwise eligible.',
         ['Confirm the customer’s preferred delivery address using the approved process.','Compare the confirmed address to the order record and document any discrepancy.','Use the approved delivery workflow to request the next tracking action; do not promise a delivery date.'],
         'The latest tracking update says the address needs confirmation. Let’s verify the delivery details and I’ll explain the available next step.',
-        'The case moves to the next delivery review only after the address check is recorded. This demo does not update shipment data.',
+        'Move to the next delivery review after the address check is recorded. Shipment status is unchanged during this review.',
         'Escalate if the address is correct but the exception remains, or if the approved delivery workflow cannot proceed.',
         [finding('shipment','Shipment status','blocker','The order remains in transit with an address confirmation exception.','Order: in transit · Latest scan: Oct 19, 2026 · Exception: address confirmation required'),finding('address','Delivery address','unknown','The address has not been reconfirmed in this case.','Customer confirmation: pending'),finding('activation','Card activation','info','The card is not activated; delivery is the reported concern, so this is context only.','Activation: not activated')]),
       scenario('delivery-confirmed', 'Delivery received and confirmed', 'success', 'Tracking and customer report both confirm the card was received.',
@@ -134,7 +134,7 @@
         [['Card status','Active'],['Customer report','Chip area visibly damaged'],['Case note','Damage described and confirmed by advocate observation'],['Replacement order','None recorded'],['Card lock','Not recorded']],
         'Customer reports a damaged card; advocate records visible damage during the simulated review.',
         'A damaged card is documented and replacement guidance is indicated.',
-        'Scenario finding is supported by both the customer report and the case observation. Replacement eligibility and exact process are illustrative and require validation.', 'Customer report and advocate observation agree; no replacement order is present.',
+        'The damage is supported by the customer report and inspection note. Replacement eligibility is not established by the available record.', 'Customer report and advocate observation agree; no replacement order is present.',
         'Customer reports the chip area is damaged. Advocate notes the visible damage. No replacement has been initiated.',
         'The damaged card may continue to fail during use. No replacement request has been submitted.',
         ['Confirm the affected card ending and document the reported damage.','Check whether the card is lost or stolen as well; follow the approved security route if so.','Guide the customer into the approved replacement workflow and confirm the order result before closing the case.'],
@@ -172,7 +172,7 @@
         [['Card status','Active · unlocked'],['Transaction attempt','Declined · Oct 19, 2026 · 6:14 PM'],['Entry method','Chip'],['Terminal response','Chip read error'],['Other entry methods tested','Not recorded']],
         'Customer reports the card failed at checkout; the linked attempt records a chip-read error.',
         'A chip-read failure is recorded for one attempt. The card hardware as the underlying cause is not confirmed.',
-        'Observed failure is confirmed in the synthetic event; the cause (card, terminal, or contact) remains unconfirmed.', 'Event method and terminal response identify a chip-read error; no additional attempts are recorded.',
+        'The recorded event confirms a chip-read error; whether the card, terminal, or contact caused it remains unconfirmed.', 'Event method and terminal response identify a chip-read error; no additional attempts are recorded.',
         'Customer reports one failed chip transaction. No test at another terminal or other card method is recorded.',
         'The customer could not complete this specific purchase. The evidence does not establish whether the card itself is damaged.',
         ['Confirm the merchant, amount, time, and linked attempt with the customer.','If the customer agrees, have them use an available alternate method or another terminal; avoid repeated attempts that could create duplicate authorizations.','If the problem repeats, document the new event and compare the response before routing for card review.'],
@@ -206,12 +206,12 @@
         [finding('customer-report','Customer report','info','The customer reports the card failed, but the report alone does not confirm a system decline.','Customer report: card failed'),finding('attempt','Transaction attempt','unknown','No transaction reference or matching attempt is available.','Reference: unavailable · Merchant/amount/time: unavailable'),finding('cardstate','Card state','passed','Card is active and not marked locked; this does not explain the reported event.','Card ending 1842: active · unlocked')])
     ],
     restrictions: [
-      scenario('restriction-customer-lock', 'Card locked in controls', 'failure', 'The synthetic card-control state is locked and the linked attempt was declined.',
+      scenario('restriction-customer-lock', 'Card locked in controls', 'failure', 'The recorded card-control state is locked and the linked attempt was declined.',
         [['Account status','Active'],['Card status','Locked'],['Lock source','Customer card controls'],['Lock event','CT-1028 · Oct 19, 2026 · 8:32 PM'],['Linked attempt','TXN-884612 · Declined after lock event · 8:47 PM']],
         'A card attempt occurs after the simulated customer-controlled lock event.',
         'The card is marked locked, and the linked attempt follows that lock event.',
-        'The configured lock state and event order support the demo finding. This does not establish any broader production restriction policy.', 'Card control state is locked; the linked decline timestamp is later than the lock event.',
-        'Customer reports a card decline. The demo record shows a customer-control lock before the attempt. No unlock action has been recorded.',
+        'The card-control event is recorded before the linked decline. This evidence explains the selected event sequence; the record does not establish broader restriction handling.', 'Card control state is locked; the linked decline timestamp is later than the lock event.',
+        'Customer reports a card decline. The account record shows a customer-control lock before the attempt. No unlock action has been recorded.',
         'The card remains unavailable for this simulated purchase while the lock state is active.',
         ['Confirm the customer recognizes the lock event and verify identity through the approved flow.','Guide the customer to review their card controls; the diagnostic itself cannot unlock the card.','Assess any new attempt separately after the customer confirms their chosen control state.'],
         'The card is currently marked locked in the account view. I can help you review the card controls, but I will not change that setting from this diagnostic.',
@@ -295,4 +295,3 @@
     item.findings = item.findings.map(f => ({...f, interpretation:f.detail}));
   }
 })();
-
