@@ -16,9 +16,9 @@ Then open `http://localhost:8000`.
 
 ## Diagnostic walkthrough
 
-From **Account overview**, choose **Open card diagnostics**. Select one of the six existing card issue tags, choose a preconfigured case, and run the diagnostic. The selected scenario drives its system conditions, findings, root-cause statement, workflow progress, advocate steps, customer-facing message, escalation criteria, expected next state, and copyable case summary.
+From **Account overview**, choose **Open card diagnostics**. Select one of the six existing issue tags, select its relevant fictional card, transaction, delivery, or replacement record, choose a compatible scenario, review the target, then select **Run Diagnostic**. No checks run before the confirmation step. Search is available for declined transactions. Cancel closes the setup, Back preserves the current choices, and a browser refresh starts a clean session.
 
-Every issue tag has three repeatable cases: a successful review, a specific failure demonstration, and a verification-needed case. Scenario definitions are maintained in `diagnostic-scenarios.js`; the shared evaluator and interface are in `app.js`.
+Each issue tag has three deterministic cases: a successful review, a failure demonstration, and a verification-needed case. Dedicated fictional target records and their scenario associations are maintained in `diagnostic-records.js`; diagnostic conditions and findings are in `diagnostic-scenarios.js`; the shared evaluator and interface are in `app.js`.
 
 ## Rule status
 
@@ -26,7 +26,7 @@ The prototype has no approved Northstar business rules or policy sources attache
 
 ## Validation and scenario inventory
 
-See [`DIAGNOSTIC-SCENARIO-VALIDATION.md`](DIAGNOSTIC-SCENARIO-VALIDATION.md) for the six-tag scenario inventory, corrected contradictions, test results, assumptions, and screenshots.
+See [`DIAGNOSTIC-SCENARIO-VALIDATION.md`](DIAGNOSTIC-SCENARIO-VALIDATION.md) for the six-tag record/scenario inventory, corrected contradictions, refresh behavior, test results, assumptions, and screenshots.
 
 ## Scope
 
