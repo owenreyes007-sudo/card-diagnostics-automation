@@ -61,7 +61,7 @@ Automated Chromium validation (`work/validate_northstar_context.cjs`) passed on 
 | Cancel closes the selector without running checks | Passed |
 | Back from confirmation retains compatible scenario choice | Passed |
 | Confirmation hides result details before Run Diagnostic | Passed |
-| Six issue-specific failure demonstrations produce selected-record results | Passed |
+| All 18 compatible scenarios manually selected and executed in the UI | Passed; six issue-specific failure demos produce selected-record findings |
 | Refresh during pending confirmation clears session selections | Passed |
 | Refresh after completed diagnostic returns to Account overview and clears findings | Passed |
 | Configured records and scenarios remain available after refresh | Passed |
@@ -85,7 +85,8 @@ Activation walkthrough stages:
 - `screenshot-context-activation-record-selection.png`
 - `screenshot-context-activation-scenario-selection.png`
 - `screenshot-context-activation-confirmation.png`
+- `screenshot-context-activation-run.png`
 - `screenshot-context-mobile-record-selection.png`
 
-Each issue also has a confirmation screenshot. The run stage is represented by the live diagnostic progress UI immediately after confirmation.
+Each issue also has a confirmation screenshot. The activation run screenshot captures the live diagnostic progress UI immediately after confirmation.
 
