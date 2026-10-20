@@ -1,12 +1,12 @@
-# Card Diagnostics Automation
+# Northstar Account Console · Card Diagnostics
 
-**Live demo:** [Open the interactive card diagnostics app](https://owenreyes007-sudo.github.io/card-diagnostics-automation/)
+**Live demo:** [Open the Northstar prototype](https://owenreyes007-sudo.github.io/card-diagnostics-automation/)
 
-A standalone browser-based card diagnostics demonstration built with HTML, CSS, and JavaScript. The interface uses synthetic account and card indicators only. It does not connect to financial systems or perform account actions.
+An account-console simulation with the card diagnostic workflow embedded in the existing Northstar experience. All customer, card, transaction, and case information is synthetic and local to the browser.
 
 ## Run locally
 
-Open `index.html` in a modern browser, or start a local static server in this folder:
+Open `index.html` in a modern browser, or start a static server in this directory:
 
 ```powershell
 python -m http.server 8000
@@ -14,10 +14,21 @@ python -m http.server 8000
 
 Then open `http://localhost:8000`.
 
-## Demo paths
+## Diagnostic walkthrough
 
-Choose **Open card diagnostics**, select one of six card issue categories, and run the staged diagnostic. Results, findings, and the advocate-facing workflow panel update based on the selected synthetic scenario.
+From **Account overview**, choose **Open card diagnostics**. Select one of the six existing card issue tags, choose a preconfigured case, and run the diagnostic. The selected scenario drives its system conditions, findings, root-cause statement, workflow progress, advocate steps, customer-facing message, escalation criteria, expected next state, and copyable case summary.
+
+Every issue tag has three repeatable cases: a successful review, a specific failure demonstration, and a verification-needed case. Scenario definitions are maintained in `diagnostic-scenarios.js`; the shared evaluator and interface are in `app.js`.
+
+## Rule status
+
+The prototype has no approved Northstar business rules or policy sources attached. All failure rules are explicitly marked **Illustrative demo rule**. Success examples are **Illustrative demo state**. Where the synthetic evidence does not establish a cause, the diagnosis is **Unconfirmed diagnosis** and names what to verify. These examples must not be treated as production guidance until validated by the relevant business owner.
+
+## Validation and scenario inventory
+
+See [`DIAGNOSTIC-SCENARIO-VALIDATION.md`](DIAGNOSTIC-SCENARIO-VALIDATION.md) for the six-tag scenario inventory, corrected contradictions, test results, assumptions, and screenshots.
 
 ## Scope
 
-All account data and diagnostic outcomes are synthetic. The demo is not connected to a live account. It cannot activate, lock, replace, or otherwise modify a card or account. Operational guidance should be reviewed before real-world use.
+This is a training simulation. It is not connected to production systems and does not activate, lock, replace, or otherwise change a card or account.
+
