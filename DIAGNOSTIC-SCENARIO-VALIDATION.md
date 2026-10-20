@@ -28,13 +28,41 @@ No full card number, PIN, CVV, or real customer data is used. Card records displ
 ## Diagnostic consistency and rule governance
 
 - Inactive status during activation remains an expected starting condition; it does not create a risk flag by itself.
-- The device-context mismatch is an illustrative demo rule. The result confirms only that the configured synthetic events differ; production rule validity is explicitly unconfirmed.
+- Device mismatch is treated as recorded context plus a missing verification result. The tool does not assert that the device difference is an official production block or risk rule.
 - The decline record amount ($38.50) and configured balance ($24.00) now agree.
 - Replacement inquiry `RP-77104` is associated with a documented damaged card and no replacement order. The completed request `RP-76882` is associated with card ending 4821 and a delivered replacement.
-- Selected record reference, identifier, and status are added to the evaluated system conditions, case note, results, and copyable case summary. Incompatible scenario IDs cannot be run against a record.
-- Missing or contradictory evidence remains unconfirmed; illustrative conditions are not represented as production Cash App policy.
+- Selected record reference, identifier, status, and relevant transaction/request attributes are added to system conditions, findings context, case note, and copyable handoff. Card last-four is taken from the linked card field for transaction, delivery, and replacement records.
+- Findings now label their interpretation and display a targeted advocate action for blockers and unavailable evidence. The summary carries selected record, finding, evidence, action, customer impact, and resolution criteria.
+- The operational result view no longer exposes scenario classification or rule-provenance disclaimers. Provenance and assumptions remain here and in the scenario source (`classification` and `ruleNote`).
+- Record/event dates and references are reconciled, including delivery request `DL-61983`, transaction `TXN-884155`, chip attempt `TXN-883991`, and control event `CT-1028` / linked decline `TXN-884612`.
 
 No approved policy source was provided. There are no verified production rules in this prototype. Business-owner review is still needed for activation verification, decline reason interpretation, delivery timeframes, replacement eligibility, card-use troubleshooting, restriction handling, production scripts, and escalation ownership.
+
+## Rule provenance and unresolved assumptions
+
+All scenario facts are fictional. The scenario source retains the CIT association (its containing category), scenario identifier, classification, configured starting conditions, findings, and expected outcome. `ruleNote` records provenance: failure examples are illustrative, verification cases do not infer a cause, and success examples are synthetic states. No scenario is represented as a verified Cash App rule.
+
+Unresolved business assumptions that need an approved source before operational use:
+
+- Whether and how a device-context difference affects card activation, and what verification result is required.
+- Which transaction authorization reasons can be shown to an advocate and what customer guidance is approved for each.
+- Delivery exception handling, tracking refresh behavior, and any customer-facing timeframes.
+- Card replacement eligibility and the approved path for damage, loss, and theft.
+- The threshold and support path for repeated chip-read failures.
+- The authorized handling and escalation route for customer-controlled locks and unavailable restriction indicators.
+- Approved identity-verification language, support routing, and escalation ownership across all CITs.
+
+The application describes observed scenario data and investigation steps without claiming these unresolved rules are production policy.
+
+## Before-and-after examples
+
+| CIT | Earlier result wording | Updated result wording |
+|---|---|---|
+| Card Activation | “The device difference is observed; whether it should block or require verification in production is unconfirmed.” | “The event records confirm the device difference, but they do not establish that the difference itself caused the failed activation. The missing verification result is the unresolved condition.” The finding now shows RP-76882, Device A, the current attempt on Device B, and the exact check for a verification result or activation error. |
+| Declined Transaction | “Scenario-configured cause: available balance is lower than the purchase amount.” | The result ties TXN-884201 at Corner Coffee to $38.50, $24.00 available, and the recorded insufficient-balance reason; the advocate is told to investigate any mismatch and not promise approval on retry. |
+| Card Not Working | The chip-read event was shown without a linked event reference or a targeted distinction between card and terminal causes. | The result identifies TXN-883991, the Oct 19 6:14 PM chip-read error, confirms the card was active and unlocked, and calls out that no alternate terminal or entry-method result is recorded. |
+
+The account workspace remains embedded and its navigation and CIT inventory are unchanged. Refresh still clears the current session while leaving static records and scenarios available.
 
 ## Refresh behavior
 
@@ -52,6 +80,9 @@ Automated Chromium validation (`work/validate_northstar_context.cjs`) passed on 
 | Fictional target records | 18 total; 3 per CIT |
 | Configured scenarios | 18 total; success, failure, and verification case per CIT |
 | Deterministic evaluator and record compatibility | Passed across all 18 scenario/record mappings |
+| Card ending resolved from selected card, transaction, delivery, or replacement record | Passed across all 18 mappings |
+| Each finding includes interpretation; blocker and unavailable findings include a next action | Passed across all 18 mappings |
+| Advocate result panels free of implementation-rule disclaimers | Passed across all 18 UI executions |
 | Failure cases contain a specific blocker | Passed across all six |
 | Success cases have no blocker or unknown finding | Passed across all six |
 | Verification cases remain unconfirmed, without confirmed blockers | Passed across all six |
