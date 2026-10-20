@@ -118,8 +118,8 @@ Automated Chromium validation (`work/validate_northstar_context.cjs`) passed on 
 | Browser runtime errors | None |
 | JavaScript syntax checks | Passed for app, scenarios, and record catalog |
 | Scenario change invalidates old findings and requires a rerun | Passed for Card Activation with a different compatible card and condition |
-| Public GitHub Pages deployment | Previously passed; this refinement is pending publication and hosted verification |
-| Hosted Chromium activation walkthrough | Previously passed; rerun after this refinement is published |
+| Public GitHub Pages deployment | Passed; commit `8fa9c5d` is live at the public application URL |
+| Hosted Chromium activation walkthrough | Passed on the updated site; failure evidence appeared, switching to an eligible condition cleared the prior result, and no browser errors occurred |
 
 ## Screenshots
 
