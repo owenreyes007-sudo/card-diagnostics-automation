@@ -22,7 +22,7 @@ Each issue tag has three deterministic cases: a successful review, a failure dem
 
 ## Rule status
 
-The prototype has no approved Northstar business rules or policy sources attached. All failure rules are explicitly marked **Illustrative demo rule**. Success examples are **Illustrative demo state**. Where the synthetic evidence does not establish a cause, the diagnosis is **Unconfirmed diagnosis** and names what to verify. These examples must not be treated as production guidance until validated by the relevant business owner.
+The prototype has no approved Northstar business rules or policy sources attached. Rule provenance and unresolved assumptions are retained in the scenario source and validation report; they are not repeated as implementation disclaimers in the advocate-facing findings. Results describe the selected fictional record and separate recorded facts from causes that remain unknown. These examples must not be treated as production guidance until validated by the relevant business owner.
 
 ## Validation and scenario inventory
 
