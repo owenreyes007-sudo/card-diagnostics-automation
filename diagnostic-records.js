@@ -19,7 +19,7 @@ window.NorthstarDiagnosticRecords = {
   delivery:{
     title:'Select Delivery Request',kind:'delivery',
     records:[
-      {id:'del-62014',label:'Card delivery request',identifier:'DL-62014',date:'Oct 05, 2026',status:'Delivery exception',card:'Card ending 1842',estimate:'Oct 12, 2026',detail:'Latest configured event: delivery exception recorded Oct 12',scenarioIds:['delivery-exception']},
+      {id:'del-62014',label:'Card delivery request',identifier:'DL-62014',date:'Oct 05, 2026',status:'Delivery exception',card:'Card ending 1842',estimate:'Oct 12, 2026',detail:'Latest configured event: address confirmation exception · Oct 19, 2026 · 2:10 PM',scenarioIds:['delivery-exception']},
       {id:'del-61983',label:'Card delivery request',identifier:'DL-61983',date:'Oct 03, 2026',status:'Delivered',card:'Card ending 4821',estimate:'Oct 10, 2026',detail:'Latest configured event: delivered Oct 10; receipt confirmed',scenarioIds:['delivery-confirmed']},
       {id:'del-62102',label:'Card delivery request',identifier:'DL-62102',date:'Oct 16, 2026',status:'Tracking unavailable',card:'Card ending 9037',estimate:'Not configured',detail:'No latest tracking event is available in this record',scenarioIds:['delivery-tracking-missing']}
     ]
