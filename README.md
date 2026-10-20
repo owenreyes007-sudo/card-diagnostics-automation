@@ -34,6 +34,8 @@ The prototype has no approved Northstar business rules or policy sources attache
 
 See [`DIAGNOSTIC-SCENARIO-VALIDATION.md`](DIAGNOSTIC-SCENARIO-VALIDATION.md) for the six-tag record/scenario inventory, corrected contradictions, result-screen changes, refresh behavior, test results, assumptions, and screenshots.
 
+For endorsement and reengineering, see [`NORTHSTAR-SIMULATION-SPEC.md`](NORTHSTAR-SIMULATION-SPEC.md) for the full product scope, workflow, requirements, scenario inventory, current limitations, proposed architecture boundaries, open decisions, and acceptance criteria.
+
 ## Scope
 
 This is a training simulation. It is not connected to production systems and does not activate, lock, replace, or otherwise change a card or account.
